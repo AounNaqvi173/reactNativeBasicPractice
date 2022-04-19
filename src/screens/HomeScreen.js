@@ -1,13 +1,25 @@
 import React from "react";
-import {
-    Text,
-    StyleSheet
-} from "react-native";
+import {Text,StyleSheet, Button, TouchableOpacity, View} from "react-native";
 
-const HomeScreen = () => {
-    return <Text style = {
-        styles.text
-    } > IoT Based Home Automation over cloud </Text>;
+const HomeScreen = (props) => {
+
+    return ( 
+    <View>
+    <Text style = {
+    styles.text
+    }> IoT Based Home Automation over cloud </Text> 
+    
+   <Button title="Go to Components Screen " onPress={() => props.navigation.navigate('Components')
+    }/>  
+    
+    <TouchableOpacity onPress={() => props.navigation.navigate('List')}> 
+    <Text> Go to  List Screen</Text>   
+    </TouchableOpacity>
+    
+    <Button title="Go to Image Screen " onPress={() => props.navigation.navigate('Image')
+    }/> 
+    </View>
+    );
 };
 
 const styles = StyleSheet.create({
