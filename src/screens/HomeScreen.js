@@ -18,8 +18,11 @@ const HomeScreen = (props) => {
     
     <Button title="Go to Image Screen " onPress={() => props.navigation.navigate('Image')
     }/> 
+    
+    <Button title="Go to Count Screen " onPress={() => props.navigation.navigate('Count')
+    }/> 
     </View>
-    );
+    ); 
 };
 
 const styles = StyleSheet.create({

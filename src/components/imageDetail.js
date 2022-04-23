@@ -6,8 +6,7 @@ const ImageDetail = props => {
     return (
         <View>
             <Image  source={require('../../assets/wisdom 2.jpg')} />
-            <Text> {props.place}</Text>
-            <Text style={styles.texts}>{props.title} {props.place}</Text>
+            <Text style={styles.texts}>{props.title} </Text>
             
         </View>
     );
