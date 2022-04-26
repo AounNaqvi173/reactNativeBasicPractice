@@ -1,65 +1,88 @@
-import React, {useState} from 'react';
+import React, {useReducer} from 'react';
 import { Text , Button ,View, StyleSheet,} from 'react-native';
 import Colorcomponent from '../components/Colorcomponent';
 
-const CustomColor = () => {
+
                                                 /*Generally we will create the sate variable in
                                                 the most parent component that needs to read or change
                                                 a state value in this case this screen in which we have
                                                 imported the components*/
+
+                                                /*For this app , these three states are extremely related . There is a precise 
+                                                set of well-known ways in which we update these values (ie 6 operations 2 for each 
+                                                state red,blue,green ). So reducer is a function that manages changes to an object.
+                                                it will take two objects as argument . 
+
+                                                 For this app: 
+                                                Argument 1 will be an object that haas all the state in it ={ red:0 , green:0 , blue:0 }
+                                                Argument 2 will be an object that will define the updates we want to make to Argument 1
+                                                {colorTOChange : 'red' , amount :15}
+
+                                                Rules:
+                                                1.we never change argument 1 directly (just like in sate).
+                                                2.reducer must always return a value that will essentially going to be used as our state 
+                                                object or our argument 1.  
+                                                  */
     
- const [ red , setRed]=useState(0);
- const [ blue , setBlue]=useState(0);
- const [ green , setGreen]=useState(0);
 
  const COLOR_INCREMENT= 15 ;
- const setcolor=(color,change)=>{
-     //color === 'red', 'green', 'blue'
-     //change === +15, -15
- 
-     switch(color) {
-         case 'red':
-             if(red+change >255 || red + change <0){
-                    return;  }
-            else {setRed(red +change);}
-                break;
+
+const reducer =( state, action) =>{
+    //state(object) ==={red: number, green: number , blue: number}
+    //action(object) === { colorToChange: 'red'||'green'||'blue'  , amount: 15 || -15 }
+
+    switch(action.colorToChange){
+        case 'red':
+        if(state.red + action.amount > 255 ||state.red + action.amount < 0 )
+        {
+            return state;
+        }
+        else
+           return { ...state, red: state.red + action.amount};
+        case 'green':
+        if(state.green + action.amount > 255 ||state.green + action.amount < 0 )
+        {
+            return state;
+        }
+        else
+            return {...state , green: state.green + action.amount};
         case 'blue':
-            if(blue+change >255 || blue + change <0){
-                    return;  }
-            else {setBlue(blue +change);}
-                 break;    
-        case 'green':    
-             if(green+change >255 || green + change <0){
-                     return;  }
-            else {setGreen(green +change);}
-    default:
-                 return;  
+        if(state.blue + action.amount > 255 || state.blue + action.amount < 0 )
+        {
+            return state;
+        }
+        else
+
+           return {...state , blue: state.blue + action.amount};
+        default:
+            return state;    
     }
 
- };
-                                                 /* If a child needs to change a state value , the parent can 
-                                                pass down a callback function to change the state value as a prop.
-                                                As in this case we need our child components that is Colorcomponent 
-                                                to change the three different state values of red, bue and green */
+    
+};
 
+const CustomColor = () => {
+                        
+ const [state , dispatch]= useReducer(reducer, {red:0, green: 0 , blue: 0});
 
+ 
     return( <View>
-     <Colorcomponent  onIncrease={ () => { setcolor('red', COLOR_INCREMENT)} } 
-        onDecrease={ () => { setcolor('red' , -1 * COLOR_INCREMENT)}}
+     <Colorcomponent  onIncrease={ () => {dispatch({ colorToChange: 'red' , amount: COLOR_INCREMENT}) } } 
+        onDecrease={ () => { dispatch({colorToChange:'red' , amount: -1 * COLOR_INCREMENT})}}
         title="Red"  
         />
-        
-        <Colorcomponent onIncrease={() => { setcolor('blue' ,  COLOR_INCREMENT)}} 
-          onDecrease={() => {setcolor('blue' , -1 * COLOR_INCREMENT)}} 
+
+        <Colorcomponent onIncrease={() => {dispatch({colorToChange:'blue' , amount: COLOR_INCREMENT})}} 
+          onDecrease={() =>{ dispatch({colorToChange:'blue' , amount: -1 * COLOR_INCREMENT})}} 
           title="Blue" 
          />
         
-        <Colorcomponent onIncrease={() => { setcolor('green' , COLOR_INCREMENT)}} 
-         onDecrease={() => {setcolor('green' ,-1 * COLOR_INCREMENT)}} 
+        <Colorcomponent onIncrease={() => { dispatch({colorToChange:'green' , amount: COLOR_INCREMENT})}} 
+         onDecrease={() => { dispatch({colorToChange:'green' , amount: -1 * COLOR_INCREMENT})}} 
              title="Green"  
          />
 
-         <View style={{ height:160 , width: 160 , backgroundColor: `rgb(${red}, ${green} , ${blue})`}} />
+         <View style={{ height:160 , width: 160 , backgroundColor: `rgb(${state.red}, ${state.green} , ${state.blue})`}} />
     </View>
 
     );
