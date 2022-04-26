@@ -25,7 +25,12 @@ const HomeScreen = (props) => {
     }/> 
     
     <Button title="Go to Select Color Page " onPress={() => props.navigation.navigate('ColorSelect')
+    }/>
+
+    <Button title="Go to Add Text Page " onPress={() => props.navigation.navigate('Text')
     }/> 
+    
+     
     </View>
     ); 
 };
