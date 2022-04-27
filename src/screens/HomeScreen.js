@@ -4,7 +4,7 @@ import {Text,StyleSheet, Button, TouchableOpacity, View} from "react-native";
 const HomeScreen = (props) => {
 
     return ( 
-    <View>
+    <View style={styles.PageFormat}> 
     <Text style = {
     styles.text
     }> IoT Based Home Automation over cloud </Text> 
@@ -30,13 +30,27 @@ const HomeScreen = (props) => {
     <Button title="Go to Add Text Page " onPress={() => props.navigation.navigate('Text')
     }/> 
     
+    
+    <Button title="Go to Box Page " onPress={() => props.navigation.navigate('Box')
+    }/> 
      
     </View>
     ); 
 };
 
 const styles = StyleSheet.create({
-    text: {
+   PageFormat: {
+        backgroundColor: '#26292E',
+        borderWidth:5 ,
+         justifyContent: 'center',
+         borderColor: 'black',
+        top:0,
+        right:0,
+        bottom:0,
+        left:0,
+        position:'absolute'
+
+    }, text: {
         fontSize: 50
     }
 });

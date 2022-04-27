@@ -26,7 +26,7 @@ const CounterScreen = () => {
         }}/>
     
         <Button title='decrease'  onPress={() => { 
-            dispatch({operation: 'decrease' , amount: -1})
+            dispatch({operation: 'decrease' , amount: 1})
         }}/>
     
         <Text style={styles.Textstyle}>Counter screen: {state.counter}</Text>
